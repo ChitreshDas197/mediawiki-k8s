@@ -2,16 +2,16 @@
 # Input values from environment variables (recommended) / *tfvars file (please add *tfvars in .gitignore while checking in the code to VCS)
 
 variable "client_id" {
-  
+
 }
 variable "client_secret" {
-  
+
 }
 variable "subscription_id" {
-  
+
 }
 variable "tenant_id" {
-  
+
 }
 
 
@@ -22,7 +22,7 @@ variable "rgname" {
   type = string
 }
 variable "location" {
-  type = string
+  type    = string
   default = "East US 2"
 }
 
