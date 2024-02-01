@@ -1,17 +1,18 @@
+# Used variables from env which are set using TF_VAR_ prefix
+# Uppercase is used as declaring env vars using TF_VAR_ makes them upper case
+# Here the env variables TF_VAR_ is defined on pipeine itself as pipeline variables
 
-#Below variables are used for resource group
-# I have used east us 2 as azure region - give your preferred region as default or via *.tfvars file as applicable
 
-variable "rgname" {
+variable "RG_NAME" {
   type = string
 }
-variable "location" {
+variable "LOCATION" {
   type    = string
-  default = "East US 2"
+#  default = "East US 2"
 }
-variable "clusterName" {
+variable "CLUSTER_NAME" {
   type = string
 }
-variable "node_count" {
+variable "NODE_COUNT" {
   type = number
 }

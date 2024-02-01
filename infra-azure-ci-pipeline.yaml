@@ -7,13 +7,21 @@ stages:
     - job: Build
       pool: selfAgents 
       steps:
+      - task: CmdLine@2
+        displayName: Install ZIP and Unzip utility
+        inputs:
+          script: 'sudo apt update -y && sudo apt install zip -y && sudo apt install unzip -y'
+      - task: TerraformInstaller@1
+        displayName: Terraform Install
+        inputs:
+          terraformVersion: 'latest'    
       - task: TerraformTaskV4@4
         displayName: TF Init
         inputs:
           provider: 'azurerm'
           command: 'init'
           backendServiceArm: 'Free Trial(5635a262-c054-46d0-9904-c079ed441435)'
-          backendAzureRmResourceGroupName: 'storage'
+          backendAzureRmResourceGroupName: 'supportRG'
           backendAzureRmStorageAccountName: 'tfstatestoreacc01'
           backendAzureRmContainerName: 'tfstateblob'
           backendAzureRmKey: 'mediawiki.terraform.tfstate'
