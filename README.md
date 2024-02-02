@@ -11,7 +11,7 @@
   ## Variable values
   - Passed using Pipeline variables on both CI Pipeline and Release Pipeline on Azure DevOps Pipelines
   - Use TF_VAR_ prefix for each variable and use them in UPPER CASE while declaring them (in variables.tf) or using them in other files
-  - Alternatively yoou can use the file "terraform.tfvars" to initialize the variables (ideally do it with pipeline/env variables)
+  - Alternatively you can use the file "terraform.tfvars" to initialize the variables (ideally do it with pipeline/env variables)
     ### CI Pipeline
     ![Pipeline Variables](https://github.com/ChitreshDas197/mediawiki-k8s-application/assets/65863286/01a008f1-8d59-4ff2-b34a-31a1280dba46)
     ### Release Pipeline
