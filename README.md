@@ -1,7 +1,54 @@
 
-# Mediawiki-K8S Deployment
+# MEDIAWIKI_K8S_INFRA_DEPLOYMENT
 
-Mediawiki has been deployed on Managed Kubernetes Cluster hosted on Azure. \
-We have used AKS Cluster as the Deployment target with a node-pool of 2 workers, Azure Blob Storage to use as a remote backend for terraform statefile. \
-We have used terraform as IaC tool to provision the AKS cluster, via CICD Pipeline hosted on Azure DevOps. We have use Self Hosted agent (Azure VM) for the Build and Release pipelines. \
-Infra and Application uses separate repo, this repo talks about the Infra Deployment Part.
+- This repo is a pre-req extension of the Application Deployment Repo at "https://github.com/ChitreshDas197/mediawiki-k8s-application.git"
+- This repo is used to version control the Terraform Configurations to deploy Azure Kubernetes Services and Azure Resource Group
+  ## Terraform Backend:
+  - Azure Containers (Blob) in Azure Storage Account (refer to section https://github.com/ChitreshDas197/mediawiki-k8s-application/tree/master#azure-storage-account-and-blob-creation)
+  - The details are used in "backend.tf" file in the root directory of this repo
+  ## Azure Service Principle for Terraform
+  - Refer to section https://github.com/ChitreshDas197/mediawiki-k8s-application/tree/master#azure-service-principal-creation-steps
+  ## Variable values
+  - Passed using Pipeline variables on both CI Pipeline and Release Pipeline on Azure DevOps Pipelines
+  - Use TF_VAR_ prefix for each variable and use them in UPPER CASE while declaring them (in variables.tf) or using them in other files
+  - Alternatively yoou can use the file "terraform.tfvars" to initialize the variables (ideally do it with pipeline/env variables)
+    ### CI Pipeline
+    ![Pipeline Variables](https://github.com/ChitreshDas197/mediawiki-k8s-application/assets/65863286/01a008f1-8d59-4ff2-b34a-31a1280dba46)
+    ### Release Pipeline
+    ![Pipeline Variables - RLSE](https://github.com/ChitreshDas197/mediawiki-k8s-application/assets/65863286/e6a2994e-7696-4f99-bfe1-f2729a953ad2)
+
+  ## Directory
+    ### main.tf -> Resource definition for AKS and Resource Group
+    ### variables.tf -> Declare variables
+    ### backend.tf -> Configure remote backend for terraform.tfstate file (in "key" mention a name of choice ending with .tfstate)
+    ### provider.tf -> Configure the provider of "azurerm"
+    ### output.tf -> Declare outputs and map it to attributes from AKS resource
+
+  ## CI Pipeline
+    - Install Terraform on Agent
+    - Initialize backend and install providers using
+        ```bash
+          terraform init
+        ```
+    - Run below to format the HCL code and validate the syntax
+        ```bash
+          terraform fmt
+          terraform validate
+        ```
+    - Run Terraform plan and Out the result to store as part of the artifact using (this can be used as evidence to proceed with release)
+        ```bash
+          terraform plan -out <directory>/<filename>
+        ```
+    - Archive and Publish it as artifact of the CI pipeline
+  ## Release Pipeline
+    - Extract the files from the archive package
+    - Run
+        ```bash
+          terraform init
+        ```
+    - Create the resources using
+        ```bash
+          terraform apply --auto-approve
+        ```
+  
+
