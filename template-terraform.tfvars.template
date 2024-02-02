@@ -1,4 +1,0 @@
-rgname = #paste your resource group name
-location = #paste your Azure region
-clusterName = #paste your Cluster Name
-node_count = #paste your required number of worker nodes
