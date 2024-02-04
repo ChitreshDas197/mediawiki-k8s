@@ -28,7 +28,11 @@
     - Install Terraform on Agent
     - Initialize backend and install providers using
         ```bash
-          terraform init
+          terraform init \
+            -backend-config="resource_group_name"=${RG_NAME} \
+            -backend-config="storage_account_name"=${SA_NAME} \
+            -backend-config="container_name"=${BLOB_NAME} \
+            -backend-config="key"=${KEY_NAME}
         ```
     - Run below to format the HCL code and validate the syntax
         ```bash
