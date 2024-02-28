@@ -15,7 +15,7 @@ variable "IDENTITY" {
   type = string
 }
 variable "VM_SIZE" {
-  type = number
+  type = string
 }
 variable "NODE_COUNT" {
   type = number
