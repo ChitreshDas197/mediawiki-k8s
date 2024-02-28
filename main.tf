@@ -1,23 +1,19 @@
-resource "azurerm_resource_group" "mediawiki_rg" {
-  name     = var.RG_NAME
+module "rg_module" {
+  source = "./modules/rg_module"
+  rg_name = var.RG_NAME
   location = var.LOCATION
 }
 
-resource "azurerm_kubernetes_cluster" "mediawiki-k8s-cluster" {
-  name                = var.CLUSTER_NAME
-  location            = azurerm_resource_group.mediawiki_rg.location
-  resource_group_name = azurerm_resource_group.mediawiki_rg.name
-  dns_prefix          = "mediawiki-dns"
-    depends_on = [
-    azurerm_resource_group.mediawiki_rg
-  ]
-  default_node_pool {
-    name       = "default"
-    node_count = var.NODE_COUNT
-    vm_size    = "Standard_D2_v2"
-  }
+module "aks_module" {
+  source = "./modules/aks_module"
+  cluster_name = var.CLUSTER_NAME
+  location = var.LOCATION 
+  rg_name = var.RG_NAME
+  dns_prefix = var.DNS_PREFIX
+  identity = var.IDENTITY
+  node_pool_name = var.NODE_POOL_NAME
+  node_count = var.NODE_COUNT
+  vm_size = var.VM_SIZE
 
-  identity {
-    type = "SystemAssigned"
-  }
+  depends_on = [ module.rg_module ]
 }

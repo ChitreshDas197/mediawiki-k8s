@@ -14,6 +14,23 @@ variable "LOCATION" {
 variable "CLUSTER_NAME" {
   type = string
 }
+
+variable "DNS_PREFIX" {
+  type = string
+}
+
+variable "IDENTITY" {
+  type = string
+}
+
+variable "NODE_POOL_NAME" {
+  type = string
+}
+
+variable "VM_SIZE" {
+  type = number
+}
+
 variable "NODE_COUNT" {
   type = number
 }
