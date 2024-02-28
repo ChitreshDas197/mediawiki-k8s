@@ -7,9 +7,9 @@
 
 terraform {
   backend "azurerm" {
-    resource_group_name = "support"
-    storage_account_name = "mwikisatestore"
-    container_name = "stateblob"
-    key = "mwiki.terraform.tfstate"
+  #  resource_group_name  
+  #  storage_account_name 
+  #  container_name       
+  #  key                  
   }
 }

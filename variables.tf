@@ -8,8 +8,8 @@ variable "RG_NAME" {
   type = string
 }
 variable "LOCATION" {
-  type    = string
-#  default = "East US 2"
+  type = string
+  #  default = "East US 2"
 }
 variable "IDENTITY" {
   type = string
